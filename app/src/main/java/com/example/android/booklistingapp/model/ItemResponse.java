@@ -13,7 +13,7 @@ public class ItemResponse implements Parcelable
     @SerializedName("totalItems")
     private int totalItems;
     @SerializedName("items")
-    private List<Item> mItems = null;
+    private List<com.example.android.booklistingapp.model.Item> mItems = null;
     public final static Parcelable.Creator<ItemResponse> CREATOR = new Creator<ItemResponse>() {
         public ItemResponse createFromParcel(Parcel in) {
             return new ItemResponse(in);
