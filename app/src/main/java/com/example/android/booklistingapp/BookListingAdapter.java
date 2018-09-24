@@ -1,4 +1,4 @@
-package com.example.android.booklistingapp.adapter;
+package com.example.android.booklistingapp;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -9,11 +9,14 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+<<<<<<< HEAD:app/src/main/java/com/example/android/booklistingapp/adapter/BookListingAdapter.java
 import com.example.android.booklistingapp.R;
 import com.example.android.booklistingapp.Utils;
 import com.example.android.booklistingapp.model.Book;
 
 import java.util.ArrayList;
+=======
+>>>>>>> master:app/src/main/java/com/example/android/booklistingapp/BookListingAdapter.java
 import java.util.List;
 
 import butterknife.BindView;

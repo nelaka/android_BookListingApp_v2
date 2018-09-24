@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+<<<<<<< HEAD
 import com.example.android.booklistingapp.adapter.BookListingAdapter;
 import com.example.android.booklistingapp.model.Book;
 import com.example.android.booklistingapp.model.Item;
@@ -36,9 +37,15 @@ import retrofit2.Response;
 
 import static com.example.android.booklistingapp.Config.maxResults;
 
+=======
+import java.util.ArrayList;
+import java.util.List;
+
+>>>>>>> master
 public class BookListingActivity extends AppCompatActivity {
     private static final String TAG = BookListingActivity.class.getSimpleName();
 
+<<<<<<< HEAD
     @BindView(R.id.empty_view)
     View mEmptyView;
     @BindView(R.id.search_button)
@@ -51,6 +58,14 @@ public class BookListingActivity extends AppCompatActivity {
 
     private List<Item> mItems = new ArrayList<>() ;
 private List<Book> mBooks =new ArrayList<>();
+=======
+    /**
+     * URL for google books data from the Google API
+     */
+    private static final String GBOOKS_REQUEST_URL =
+            "https://www.googleapis.com/books/v1/volumes?maxResults=10&q=";
+
+>>>>>>> master
     /**
      * Adapter for the list of books
      */
@@ -69,6 +84,7 @@ private List<Book> mBooks =new ArrayList<>();
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_listing);
+<<<<<<< HEAD
         ButterKnife.bind(this);
         mLayoutManager = new LinearLayoutManager( getApplicationContext(), LinearLayout.VERTICAL, false);
         /* Association of the LayoutManager with the RecyclerView */
@@ -82,16 +98,31 @@ private List<Book> mBooks =new ArrayList<>();
 
         // Set empty view on the ListView, so that it only shows when the list has 0 items.
      //   mBookLayout.setEmptyView(mEmptyView);
+=======
+
+        // Find a reference to the {@link ListView} in the layout
+        ListView bookListView = (ListView) findViewById(R.id.list);
+
+        // Find and set empty view on the ListView, so that it only shows when the list has 0 items.
+        View emptyView = findViewById(R.id.empty_view);
+        bookListView.setEmptyView(emptyView);
+>>>>>>> master
 
         // Create a new adapter that takes an empty list of books as input
         mAdapter = new BookListingAdapter(this);
 
         // Set the adapter on the {@link ListView}
         // so the list can be populated in the user interface
+<<<<<<< HEAD
         //mRecyclerView.setAdapter(mAdapter);
+=======
+        bookListView.setAdapter(mAdapter);
+>>>>>>> master
 
         // Set a click listener on the search Button, to implement the search
-        mSearchButton.setOnClickListener(new View.OnClickListener() {
+        Button searchButton = (Button) findViewById(R.id.search_button);
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
             // The code in this method will be executed when the button is clicked on.
             @Override
             public void onClick(View view) {
@@ -99,7 +130,13 @@ private List<Book> mBooks =new ArrayList<>();
                 mItems = null;
                 //Check for internet connection
                 if (isNetworkAvailable(context)) {
+<<<<<<< HEAD
                     String searchTerm = mSearchEditTextView.getText().toString();
+=======
+
+                    EditText searchEditTextView = (EditText) findViewById(R.id.search);
+                    String searchTerm = searchEditTextView.getText().toString();
+>>>>>>> master
 
                     if (searchTerm.isEmpty()) {
                         Toast.makeText(getApplicationContext(), "Nothing to search for... :(", Toast.LENGTH_SHORT).show();
@@ -118,7 +155,11 @@ private List<Book> mBooks =new ArrayList<>();
 
         // Set an item click listener on the ListView, which sends an intent to a web browser
         // to open a website with more information about the selected book.
+<<<<<<< HEAD
         /*mRecyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+=======
+        bookListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+>>>>>>> master
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 // Find the current book that was clicked on
