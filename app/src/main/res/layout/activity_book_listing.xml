@@ -15,6 +15,8 @@
         android:hint="@string/search"
         android:padding="@dimen/padding"
         app:layout_constraintEnd_toEndOf="parent"
+        android:importantForAutofill="no"
+        android:inputType=""
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -41,7 +43,7 @@
         android:divider="@null"
         android:dividerHeight="0dp"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/padding"
+        android:paddingStart="@dimen/padding"
         android:paddingTop="@dimen/padding"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,6 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:contentDescription="TODO"
             android:src="@drawable/no_result" />
 
         <TextView
@@ -76,7 +79,6 @@
             android:textAppearance="?android:textAppearanceMedium" />
 
         <TextView
-            android:id="@+id/empty_subtitle_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/empty_title_text"

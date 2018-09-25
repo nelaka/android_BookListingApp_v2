@@ -33,7 +33,7 @@ public class Book implements Parcelable {
 
         };
 
-        protected Book(Parcel in) {
+    Book(Parcel in) {
             this.title = in.readString();
             this.authors = in.readArrayList(String.class.getClassLoader());
             this.infoLink = in.readString();
@@ -79,11 +79,7 @@ public class Book implements Parcelable {
             return authors;
         }
 
-        public void setAuthors(List<String> authors) {
-            this.authors = authors;
-        }
-
-        public Book withAuthors(List<String> authors) {
+    public Book withAuthors(List<String> authors) {
             this.authors = authors;
             return this;
         }

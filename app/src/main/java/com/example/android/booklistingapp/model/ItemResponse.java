@@ -40,7 +40,6 @@ public class ItemResponse implements Parcelable
      *
      * @param items
      * @param totalItems
-     * @param kind
      */
     public ItemResponse(int totalItems, List<Item> items) {
         super();

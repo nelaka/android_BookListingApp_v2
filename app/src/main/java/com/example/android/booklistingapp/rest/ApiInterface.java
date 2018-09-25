@@ -1,9 +1,6 @@
 package com.example.android.booklistingapp.rest;
 
-import com.example.android.booklistingapp.model.Item;
 import com.example.android.booklistingapp.model.ItemResponse;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

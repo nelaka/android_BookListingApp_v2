@@ -26,9 +26,11 @@ import butterknife.ButterKnife;
 public class BookListingAdapter extends RecyclerView.Adapter<BookListingAdapter.BookViewHolder> {
     private final Context mContext;
     private List<Book> mBooks = new ArrayList<>();
+    private final BookListingAdapterOnClickHandler mClickHandler;
 
-    public BookListingAdapter(Context context) {
+    public BookListingAdapter(Context context, BookListingAdapterOnClickHandler clickHandler) {
         mContext = context;
+        mClickHandler = clickHandler;
     }
 
     @NonNull
@@ -37,7 +39,7 @@ public class BookListingAdapter extends RecyclerView.Adapter<BookListingAdapter.
 
         View view = LayoutInflater.from(mContext).inflate(R.layout.book_list_item, parent, false);
         view.setFocusable(true);
-        return new BookViewHolder(view, mBooks);
+        return new BookViewHolder(view, mBooks, mClickHandler);
     }
 
     @Override
@@ -56,7 +58,15 @@ public class BookListingAdapter extends RecyclerView.Adapter<BookListingAdapter.
         notifyDataSetChanged();
     }
 
-    class BookViewHolder extends RecyclerView.ViewHolder {
+    /**
+     * The interface that receives onClick messages.
+     */
+    public interface BookListingAdapterOnClickHandler {
+        void onClick(Book book);
+    }
+
+
+    class BookViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final String TAG = BookViewHolder.class.getSimpleName();
         @BindView(R.id.title)
         TextView titleTextView;
@@ -65,12 +75,14 @@ public class BookListingAdapter extends RecyclerView.Adapter<BookListingAdapter.
         @BindView(R.id.authors)
         TextView authorsTextView;
         private List<Book> mBooks;
+        private final BookListingAdapterOnClickHandler mClickHandler;
 
-
-        public BookViewHolder(View itemView, List<Book> books) {
+        public BookViewHolder(View itemView, List<Book> books, BookListingAdapterOnClickHandler clickHandler) {
             super(itemView);
             mBooks = books;
             ButterKnife.bind(this, itemView);
+            mClickHandler = clickHandler;
+            itemView.setOnClickListener(this);
         }
 
         public void bindBooks(int position) {
@@ -93,6 +105,14 @@ public class BookListingAdapter extends RecyclerView.Adapter<BookListingAdapter.
                 authorsTextView.setText(authors);
                 authorsTextView.setVisibility(View.VISIBLE);
             }
+        }
+
+        @Override
+        public void onClick(View v) {
+            int adapterPosition = getAdapterPosition();
+            mClickHandler.onClick(mBooks.get(adapterPosition));
+
+
         }
     }
 }
