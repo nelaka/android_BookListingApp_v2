@@ -28,6 +28,7 @@
         android:layout_marginBottom="@dimen/default_padding_small"
         android:layout_marginEnd="@dimen/default_padding_small"
         android:text="@string/button_name"
+        android:enabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/search"

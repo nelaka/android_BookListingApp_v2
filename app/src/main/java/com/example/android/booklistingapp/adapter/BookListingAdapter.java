@@ -86,6 +86,7 @@ public class BookListingAdapter extends RecyclerView.Adapter<BookListingAdapter.
         }
 
         public void bindBooks(int position) {
+
             // Get the {@link Book} object located at this position in the list
             Book currentBook = mBooks.get(position);
 

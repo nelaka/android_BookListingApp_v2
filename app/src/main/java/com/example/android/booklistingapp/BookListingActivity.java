@@ -10,6 +10,9 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -48,7 +51,7 @@ public class BookListingActivity extends AppCompatActivity implements BookListin
     RecyclerView mRecyclerView;
 
     private List<Item> mItems = new ArrayList<>() ;
-    private final List<Book> mBooks = new ArrayList<>();
+    private List<Book> mBooks = new ArrayList<>();
 
     /**
      * Adapter for the list of books
@@ -78,11 +81,32 @@ public class BookListingActivity extends AppCompatActivity implements BookListin
          */
         mRecyclerView.setHasFixedSize(true);
 
-        // Set empty view on the ListView, so that it only shows when the list has 0 items.
-     //   mBookLayout.setEmptyView(mEmptyView);
-
         // Create a new adapter that takes an empty list of books as input
         mAdapter = new BookListingAdapter(this, this);
+
+        // Enable Send button when there's text to send
+        mSearchEditTextView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.toString().trim().length() > 0) {
+                    mSearchButton.setEnabled(true);
+
+                } else {
+                    mSearchButton.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        mSearchEditTextView.setFilters(new InputFilter[]{new InputFilter.LengthFilter(Config.DEFAULT_MSG_LENGTH_LIMIT)});
+
 
         // Set a click listener on the search Button, to implement the search
         mSearchButton.setOnClickListener(new View.OnClickListener() {
@@ -91,27 +115,23 @@ public class BookListingActivity extends AppCompatActivity implements BookListin
             public void onClick(View view) {
                 Context context = getApplicationContext();
                 mItems = null;
+                //       mBooks = null;
                 //Check for internet connection
                 if (isNetworkAvailable(context)) {
                     String searchTerm = mSearchEditTextView.getText().toString();
 
-                    if (searchTerm.isEmpty()) {
-                        Toast.makeText(getApplicationContext(), "Nothing to search for... :(", Toast.LENGTH_SHORT).show();
-                    } else {
                         Toast.makeText(getApplicationContext(), "Searching for: " + searchTerm, Toast.LENGTH_SHORT).show();
                         getBooks(searchTerm);
-                    }
                 } else {
                     //Provide feedback about no internet connection
                     Toast.makeText(BookListingActivity.this, "Please check your internet connection - No internet!", Toast.LENGTH_LONG).show();
                 }
             }
         });
-
     }
 public void getBooks(String searchTerm) {
- //   if (mItems.size() < 1 || mItems.get(0) == null) {
-
+    // if (mItems.size() < 1 || mItems.get(0) == null) {
+//if (searchTerm != null){
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
         Call<ItemResponse> call;
         call = apiService.getItems(searchTerm, maxResults);
@@ -136,6 +156,7 @@ public void getBooks(String searchTerm) {
                     // Set the adapter on the {@link ListView}
                     // so the list can be populated in the user interface
                     mRecyclerView.setAdapter(mAdapter);
+                    //   mSearchEditTextView.setText("");
                 }
             }
 
@@ -148,8 +169,8 @@ public void getBooks(String searchTerm) {
                 Log.e(TAG, t.toString());
             }
         });
-//    }
 }
+//}
 
     @Override
     public void onClick(Book book) {

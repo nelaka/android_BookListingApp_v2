@@ -10,4 +10,6 @@ public class Config {
 
     public static final String GOOGLE_BOOKS_BASE_URL = "https://www.googleapis.com/books/v1/";
     public static final int maxResults = 10;
+
+    public static final int DEFAULT_MSG_LENGTH_LIMIT = 140;
 }
