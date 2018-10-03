@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class ItemResponse implements Parcelable
 {
@@ -13,7 +13,7 @@ public class ItemResponse implements Parcelable
     @SerializedName("totalItems")
     private int totalItems;
     @SerializedName("items")
-    private List<com.example.android.booklistingapp.model.Item> mItems = null;
+    private ArrayList<Item> mItems;
     public final static Parcelable.Creator<ItemResponse> CREATOR = new Creator<ItemResponse>() {
         public ItemResponse createFromParcel(Parcel in) {
             return new ItemResponse(in);
@@ -26,22 +26,16 @@ public class ItemResponse implements Parcelable
 
     private ItemResponse(Parcel in) {
         this.totalItems = in.readInt();
-        mItems = in.readArrayList(Item.class.getClassLoader());
+        in.readList(mItems, Item.class.getClassLoader());
     }
 
-    /**
-     * No args constructor for use in serialization
-     *
-     */
-    public ItemResponse() {
-    }
 
     /**
      *
      * @param items
      * @param totalItems
      */
-    public ItemResponse(int totalItems, List<Item> items) {
+    public ItemResponse(int totalItems, ArrayList<Item> items) {
         super();
         this.totalItems = totalItems;
         mItems = items;
@@ -61,15 +55,15 @@ public class ItemResponse implements Parcelable
         return this;
     }
 
-    public List<Item> getItems() {
+    public ArrayList<Item> getItems() {
         return mItems;
     }
 
-    public void setItems(List<Item> items) {
+    public void setItems(ArrayList<Item> items) {
         mItems = items;
     }
 
-    public ItemResponse withItems(List<Item> items) {
+    public ItemResponse withItems(ArrayList<Item> items) {
         mItems = items;
         return this;
     }

@@ -25,7 +25,7 @@ import butterknife.ButterKnife;
  * */
 public class BookListingAdapter extends RecyclerView.Adapter<BookListingAdapter.BookViewHolder> {
     private final Context mContext;
-    private List<Book> mBooks = new ArrayList<>();
+    private ArrayList<Book> mBooks = new ArrayList<>();
     private final BookListingAdapterOnClickHandler mClickHandler;
 
     public BookListingAdapter(Context context, BookListingAdapterOnClickHandler clickHandler) {
@@ -53,7 +53,7 @@ public class BookListingAdapter extends RecyclerView.Adapter<BookListingAdapter.
         return mBooks.size();
     }
 
-    public void setData(List<Book> data) {
+    public void setData(ArrayList<Book> data) {
         mBooks = data;
         notifyDataSetChanged();
     }
@@ -74,10 +74,10 @@ public class BookListingAdapter extends RecyclerView.Adapter<BookListingAdapter.
         TextView subtitleTextView;
         @BindView(R.id.authors)
         TextView authorsTextView;
-        private List<Book> mBooks;
+        private final ArrayList<Book> mBooks;
         private final BookListingAdapterOnClickHandler mClickHandler;
 
-        public BookViewHolder(View itemView, List<Book> books, BookListingAdapterOnClickHandler clickHandler) {
+        BookViewHolder(View itemView, ArrayList<Book> books, BookListingAdapterOnClickHandler clickHandler) {
             super(itemView);
             mBooks = books;
             ButterKnife.bind(this, itemView);
@@ -85,7 +85,7 @@ public class BookListingAdapter extends RecyclerView.Adapter<BookListingAdapter.
             itemView.setOnClickListener(this);
         }
 
-        public void bindBooks(int position) {
+        void bindBooks(int position) {
 
             // Get the {@link Book} object located at this position in the list
             Book currentBook = mBooks.get(position);

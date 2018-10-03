@@ -28,7 +28,7 @@ import com.example.android.booklistingapp.rest.ApiClient;
 import com.example.android.booklistingapp.rest.ApiInterface;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,7 +40,7 @@ import static com.example.android.booklistingapp.Config.maxResults;
 
 public class BookListingActivity extends AppCompatActivity implements BookListingAdapter.BookListingAdapterOnClickHandler {
     private static final String TAG = BookListingActivity.class.getSimpleName();
-
+    private final ArrayList<Book> mBooks = new ArrayList<>();
     @BindView(R.id.empty_view)
     View mEmptyView;
     @BindView(R.id.search_button)
@@ -49,10 +49,7 @@ public class BookListingActivity extends AppCompatActivity implements BookListin
     EditText mSearchEditTextView;
     @BindView(R.id.books_rv)
     RecyclerView mRecyclerView;
-
-    private List<Item> mItems = new ArrayList<>() ;
-    private List<Book> mBooks = new ArrayList<>();
-
+    private ArrayList<Item> mItems = new ArrayList<>();
     /**
      * Adapter for the list of books
      */
@@ -61,9 +58,9 @@ public class BookListingActivity extends AppCompatActivity implements BookListin
     /**
      * Returns true if network is available or about to become available
      */
-    public static boolean isNetworkAvailable(Context context) {
+    private static boolean isNetworkAvailable(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        NetworkInfo activeNetwork = Objects.requireNonNull(cm).getActiveNetworkInfo();
         return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
 
@@ -120,8 +117,8 @@ public class BookListingActivity extends AppCompatActivity implements BookListin
                 if (isNetworkAvailable(context)) {
                     String searchTerm = mSearchEditTextView.getText().toString();
 
-                        Toast.makeText(getApplicationContext(), "Searching for: " + searchTerm, Toast.LENGTH_SHORT).show();
-                        getBooks(searchTerm);
+                    Toast.makeText(getApplicationContext(), "Searching for: " + searchTerm, Toast.LENGTH_SHORT).show();
+                    getBooks(searchTerm);
                 } else {
                     //Provide feedback about no internet connection
                     Toast.makeText(BookListingActivity.this, "Please check your internet connection - No internet!", Toast.LENGTH_LONG).show();
@@ -129,25 +126,24 @@ public class BookListingActivity extends AppCompatActivity implements BookListin
             }
         });
     }
-public void getBooks(String searchTerm) {
-    // if (mItems.size() < 1 || mItems.get(0) == null) {
+
+    private void getBooks(String searchTerm) {
+        // if (mItems.size() < 1 || mItems.get(0) == null) {
 //if (searchTerm != null){
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
         Call<ItemResponse> call;
         call = apiService.getItems(searchTerm, maxResults);
         call.enqueue(new Callback<ItemResponse>() {
             @Override
-            public void onResponse(@NonNull Call<ItemResponse> call, Response<ItemResponse> response) {
-                if (response.body() != null) {
-                    mItems = response.body().getItems();
-                }
+            public void onResponse(@NonNull Call<ItemResponse> call, @NonNull Response<ItemResponse> response) {
+                if (response.body() != null) mItems = response.body().getItems();
                 Log.d("MAIN ", "Number of results received: " + mItems.size());
                 //  mLoadingIndicator.setVisibility(View.INVISIBLE);
 
                 // If there is a valid list of {@link Book}s, then add them to the adapter's
                 // data set. This will trigger the ListView to update.
                 if (mItems != null && !mItems.isEmpty()) {
-                    for (int i=0; i<mItems.size(); i++)
+                    for (int i = 0; i < mItems.size(); i++)
                         mBooks.add(mItems.get(i).getBook());
                     mEmptyView.setVisibility(View.INVISIBLE);
                     mRecyclerView.setVisibility(View.VISIBLE);
@@ -161,7 +157,7 @@ public void getBooks(String searchTerm) {
             }
 
             @Override
-            public void onFailure(Call<ItemResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<ItemResponse> call, @NonNull Throwable t) {
                 //     mLoadingIndicator.setVisibility(View.INVISIBLE);
                 //   mErrorMsg = getString(R.string.msg_error);
                 // showErrorMessage(mErrorMsg);
@@ -169,7 +165,7 @@ public void getBooks(String searchTerm) {
                 Log.e(TAG, t.toString());
             }
         });
-}
+    }
 //}
 
     @Override

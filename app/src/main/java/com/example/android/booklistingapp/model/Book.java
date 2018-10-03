@@ -5,24 +5,20 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class Book implements Parcelable {
 
         @SerializedName("title")
         private String title;
         @SerializedName("authors")
-        private List<String> authors = null;
+        private ArrayList authors = null;
         @SerializedName("infoLink")
         private String infoLink;
         @SerializedName("subtitle")
         private String subtitle;
         public final static Parcelable.Creator<Book> CREATOR = new Creator<Book>() {
 
-
-            @SuppressWarnings({
-                    "unchecked"
-            })
             public Book createFromParcel(Parcel in) {
                 return new Book(in);
             }
@@ -41,20 +37,13 @@ public class Book implements Parcelable {
         }
 
         /**
-         * No args constructor for use in serialization
-         *
-         */
-        public Book() {
-        }
-
-        /**
          *
          * @param infoLink
          * @param authors
          * @param title
          * @param subtitle
          * */
-        public Book(String title, String subtitle, List<String> authors,  String infoLink) {
+        public Book(String title, String subtitle, ArrayList<String> authors,  String infoLink) {
             super();
             this.title = title;
             this.authors = authors;
@@ -75,11 +64,11 @@ public class Book implements Parcelable {
             return this;
         }
 
-        public List<String> getAuthors() {
+        public ArrayList getAuthors() {
             return authors;
         }
 
-    public Book withAuthors(List<String> authors) {
+    public Book withAuthors(ArrayList<String> authors) {
             this.authors = authors;
             return this;
         }

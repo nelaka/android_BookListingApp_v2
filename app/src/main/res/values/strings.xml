@@ -3,8 +3,9 @@
     <string name="search">Insert a search term </string>
     <string name="button_name">Search</string>
     <!-- Title text for the empty view -->
-    <string name="empty_view_title_text">It\'s a bit lonely here...</string>
+    <string name="empty_view_title_text">It\'s a bit lonely here…</string>
     <!-- Subtitle text for the empty view that informs the user how to populate the list -->
-    <string name="empty_view_subtitle_text">Search for books using a word or a phrase in the search box on top and by pressing the search button</string>
+    <string name="empty_view_subtitle_text">Search for books in the topic you like! Enter the word or phrase in the search box and press the search button.</string>
     <string name="desc_img_no_result">Image when there is no result</string>
+    <string name="title_label">title</string>
 </resources>
