@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.android.booklistingapp.adapter.BookListingAdapter;
@@ -40,7 +41,7 @@ import static com.example.android.booklistingapp.Config.maxResults;
 
 public class BookListingActivity extends AppCompatActivity implements BookListingAdapter.BookListingAdapterOnClickHandler {
     private static final String TAG = BookListingActivity.class.getSimpleName();
-    private final ArrayList<Book> mBooks = new ArrayList<>();
+  //  private final ArrayList<Book> mBooks = new ArrayList<>();
     @BindView(R.id.empty_view)
     View mEmptyView;
     @BindView(R.id.search_button)
@@ -49,6 +50,8 @@ public class BookListingActivity extends AppCompatActivity implements BookListin
     EditText mSearchEditTextView;
     @BindView(R.id.books_rv)
     RecyclerView mRecyclerView;
+    @BindView(R.id.pb_loading_indicator)
+    ProgressBar mLoadingIndicator;
     private ArrayList<Item> mItems = new ArrayList<>();
     /**
      * Adapter for the list of books
@@ -130,15 +133,16 @@ public class BookListingActivity extends AppCompatActivity implements BookListin
     private void getBooks(String searchTerm) {
         // if (mItems.size() < 1 || mItems.get(0) == null) {
 //if (searchTerm != null){
+        final ArrayList<Book> mBooks = new ArrayList<>();
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
         Call<ItemResponse> call;
         call = apiService.getItems(searchTerm, maxResults);
         call.enqueue(new Callback<ItemResponse>() {
             @Override
             public void onResponse(@NonNull Call<ItemResponse> call, @NonNull Response<ItemResponse> response) {
-                if (response.body() != null) mItems = response.body().getItems();
-                Log.d("MAIN ", "Number of results received: " + mItems.size());
-                //  mLoadingIndicator.setVisibility(View.INVISIBLE);
+                if (response.body() != null ) mItems = response.body().getItems();
+              //  Log.d("MAIN ", "Number of results received: " + mItems.size());
+                mLoadingIndicator.setVisibility(View.INVISIBLE);
 
                 // If there is a valid list of {@link Book}s, then add them to the adapter's
                 // data set. This will trigger the ListView to update.
@@ -158,7 +162,8 @@ public class BookListingActivity extends AppCompatActivity implements BookListin
 
             @Override
             public void onFailure(@NonNull Call<ItemResponse> call, @NonNull Throwable t) {
-                //     mLoadingIndicator.setVisibility(View.INVISIBLE);
+                 mLoadingIndicator.setVisibility(View.INVISIBLE);
+                mEmptyView.setVisibility(View.VISIBLE);
                 //   mErrorMsg = getString(R.string.msg_error);
                 // showErrorMessage(mErrorMsg);
                 // Log error here since request failed

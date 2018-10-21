@@ -100,7 +100,7 @@ public class BookListingAdapter extends RecyclerView.Adapter<BookListingAdapter.
             }
 
             // Find the TextView with view ID authors and hide it, if it is empty
-            if (currentBook.getAuthors().isEmpty()) authorsTextView.setVisibility(View.GONE);
+            if (currentBook.getAuthors()!=null && currentBook.getAuthors().isEmpty()) authorsTextView.setVisibility(View.GONE);
             else {
                 String authors = Utils.fromListToString(currentBook.getAuthors());
                 authorsTextView.setText(authors);
