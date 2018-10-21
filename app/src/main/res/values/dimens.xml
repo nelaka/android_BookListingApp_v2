@@ -1,4 +1,7 @@
 <resources>
     <dimen name="padding">16dp</dimen>
     <dimen name="default_padding_small">8dp</dimen>
+
+    <!-- progress bar -->
+    <dimen name="progress_bar_dimension">42dp</dimen>
 </resources>
