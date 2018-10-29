@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,47 +9,39 @@
 
     <EditText xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/search"
-        android:layout_width="match_parent"
+        android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/default_padding_small"
-        android:layout_marginStart="@dimen/default_padding_small"
         android:hint="@string/search"
+        android:inputType="textAutoComplete"
         android:padding="@dimen/padding"
         app:layout_constraintEnd_toEndOf="parent"
-        android:inputType="textAutoComplete"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="Autofill"
-        android:importantForAutofill="no"
-        android:autofillHints="@string/search"/>
+        tools:ignore="Autofill" />
 
     <Button
         android:id="@+id/search_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/default_padding_small"
         android:layout_marginTop="@dimen/default_padding_small"
-        android:layout_marginBottom="@dimen/default_padding_small"
-        android:layout_marginEnd="@dimen/default_padding_small"
+        android:layout_marginEnd="8dp"
         android:text="@string/button_name"
-        android:enabled="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/search"
+        app:layout_constraintEnd_toEndOf="@+id/search"
         app:layout_constraintTop_toBottomOf="@+id/search" />
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
+        android:id="@+id/frameLayout"
+        android:layout_width="368dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/search"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_button">
+        app:layout_constraintTop_toTopOf="parent">
         <!-- Layout for a list of books -->
         <android.support.v7.widget.RecyclerView
             android:id="@+id/books_rv"
@@ -61,25 +54,27 @@
             android:dividerHeight="0dp"
             android:orientation="vertical"
             android:paddingStart="@dimen/padding"
-            android:paddingEnd="@dimen/padding"
             android:paddingTop="@dimen/padding"
-            android:scrollbars="vertical"/>
+            android:paddingEnd="@dimen/padding"
+            android:scrollbars="vertical"
+
+            />
 
         <!-- Empty view for the list -->
         <LinearLayout
             android:id="@+id/empty_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_marginStart="@dimen/default_padding_small"
             android:orientation="vertical"
-            android:layout_gravity="center_horizontal"
             android:padding="@dimen/padding">
 
             <ImageView
                 android:id="@+id/no_result_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-android:layout_gravity="center_horizontal"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/padding"
                 android:contentDescription="@string/desc_img_no_result"
                 android:src="@drawable/ic_search" />
@@ -88,7 +83,7 @@ android:layout_gravity="center_horizontal"
                 android:id="@+id/empty_title_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-android:layout_gravity="center_horizontal"
+                android:layout_gravity="center_horizontal"
                 android:fontFamily="sans-serif-medium"
                 android:paddingTop="@dimen/padding"
                 android:text="@string/empty_view_title_text"
@@ -97,7 +92,7 @@ android:layout_gravity="center_horizontal"
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-android:layout_gravity="center_horizontal"
+                android:layout_gravity="center_horizontal"
                 android:fontFamily="sans-serif"
                 android:paddingTop="@dimen/default_padding_small"
                 android:text="@string/empty_view_subtitle_text"
@@ -113,4 +108,4 @@ android:layout_gravity="center_horizontal"
             android:layout_gravity="center"
             android:visibility="invisible" />
     </FrameLayout>
-    </android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>
