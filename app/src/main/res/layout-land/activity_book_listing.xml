@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/default_padding_small"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="@dimen/default_padding_small"
         android:text="@string/button_name"
         app:layout_constraintEnd_toEndOf="@+id/search"
         app:layout_constraintTop_toBottomOf="@+id/search" />
@@ -32,12 +32,12 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/frameLayout"
-        android:layout_width="368dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="@dimen/default_padding_small"
+        android:layout_marginTop="@dimen/default_padding_small"
+        android:layout_marginEnd="@dimen/default_padding_small"
+        android:layout_marginBottom="@dimen/default_padding_small"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/search"
         app:layout_constraintStart_toStartOf="parent"
@@ -90,7 +90,7 @@
                 android:textAppearance="?android:textAppearanceMedium" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="365dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:fontFamily="sans-serif"

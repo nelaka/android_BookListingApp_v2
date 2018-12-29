@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "231095681491",
+    "firebase_url": "https://booklistingapp-c3dba.firebaseio.com",
+    "project_id": "booklistingapp-c3dba",
+    "storage_bucket": "booklistingapp-c3dba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:231095681491:android:b43ccdb7c0306181",
+        "android_client_info": {
+          "package_name": "com.example.android.booklistingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "231095681491-94l8b00rm40jadd435du274b6ch81nc8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUalJM4sxeOtIkzaIGRKvRidxAvsSKO7s"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
