@@ -15,8 +15,8 @@ import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -45,7 +45,7 @@ public class BookListingActivity extends AppCompatActivity implements BookListin
     @BindView(R.id.empty_view)
     View mEmptyView;
     @BindView(R.id.search_button)
-    Button mSearchButton;
+    ImageView mSearchButton;
     @BindView(R.id.search)
     EditText mSearchEditTextView;
     @BindView(R.id.books_rv)
