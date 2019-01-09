@@ -1,64 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".BookListingActivity">
 
-    <EditText xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/search"
-        android:layout_width="170dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/default_padding_small"
-        android:hint="@string/search"
-        android:inputType="textAutoComplete"
-        android:padding="@dimen/padding"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:ignore="Autofill" />
-
-    <Button
-        android:id="@+id/search_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/default_padding_small"
-        android:layout_marginEnd="@dimen/default_padding_small"
-        android:text="@string/button_name"
-        app:layout_constraintEnd_toEndOf="@+id/search"
-        app:layout_constraintTop_toBottomOf="@+id/search" />
-
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/frameLayout"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/default_padding_small"
-        android:layout_marginTop="@dimen/default_padding_small"
-        android:layout_marginEnd="@dimen/default_padding_small"
-        android:layout_marginBottom="@dimen/default_padding_small"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/search"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/adView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
         <!-- Layout for a list of books -->
         <android.support.v7.widget.RecyclerView
             android:id="@+id/books_rv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/default_padding_small"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="@dimen/default_padding_small"
+            android:layout_height="match_parent"
             android:divider="@null"
             android:dividerHeight="0dp"
             android:orientation="vertical"
-            android:paddingStart="@dimen/padding"
-            android:paddingTop="@dimen/padding"
-            android:paddingEnd="@dimen/padding"
-            android:scrollbars="vertical"
-
-            />
+            android:scrollbars="vertical"/>
 
         <!-- Empty view for the list -->
         <LinearLayout
@@ -69,15 +37,6 @@
             android:layout_marginStart="@dimen/default_padding_small"
             android:orientation="vertical"
             android:padding="@dimen/padding">
-
-            <ImageView
-                android:id="@+id/no_result_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/padding"
-                android:contentDescription="@string/desc_img_no_result"
-                android:src="@drawable/ic_search" />
 
             <TextView
                 android:id="@+id/empty_title_text"
@@ -108,4 +67,20 @@
             android:layout_gravity="center"
             android:visibility="invisible" />
     </FrameLayout>
-</android.support.constraint.ConstraintLayout>
+
+    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
+        ads:layout_constraintEnd_toEndOf="@+id/frameLayout"
+        ads:layout_constraintHorizontal_bias="0.4"
+        ads:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+    </com.google.android.gms.ads.AdView>
+</RelativeLayout>

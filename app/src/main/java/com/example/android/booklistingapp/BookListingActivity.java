@@ -1,5 +1,6 @@
 package com.example.android.booklistingapp;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -10,15 +11,19 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.example.android.booklistingapp.adapter.BookListingAdapter;
@@ -27,6 +32,9 @@ import com.example.android.booklistingapp.model.Item;
 import com.example.android.booklistingapp.model.ItemResponse;
 import com.example.android.booklistingapp.rest.ApiClient;
 import com.example.android.booklistingapp.rest.ApiInterface;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -44,10 +52,10 @@ public class BookListingActivity extends AppCompatActivity implements BookListin
   //  private final ArrayList<Book> mBooks = new ArrayList<>();
     @BindView(R.id.empty_view)
     View mEmptyView;
-    @BindView(R.id.search_button)
-    ImageView mSearchButton;
-    @BindView(R.id.search)
-    EditText mSearchEditTextView;
+  //  @BindView(R.id.search_button)
+   // ImageView mSearchButton;
+   // @BindView(R.id.search)
+   // EditText mSearchEditTextView;
     @BindView(R.id.books_rv)
     RecyclerView mRecyclerView;
     @BindView(R.id.pb_loading_indicator)
@@ -58,6 +66,7 @@ public class BookListingActivity extends AppCompatActivity implements BookListin
      */
     private BookListingAdapter mAdapter;
 
+    private AdView mAdView;
     /**
      * Returns true if network is available or about to become available
      */
@@ -72,6 +81,11 @@ public class BookListingActivity extends AppCompatActivity implements BookListin
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book_listing);
         ButterKnife.bind(this);
+
+        // Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713
+        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
+
+
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayout.VERTICAL, false);
         /* Association of the LayoutManager with the RecyclerView */
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -84,8 +98,17 @@ public class BookListingActivity extends AppCompatActivity implements BookListin
         // Create a new adapter that takes an empty list of books as input
         mAdapter = new BookListingAdapter(this, this);
 
+        // Get the intent, verify the action and get the query
+        Intent intent = getIntent();
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String searchTerm = intent.getStringExtra(SearchManager.QUERY);
+            Toast.makeText(getApplicationContext(), "Searching for: " + searchTerm, Toast.LENGTH_SHORT).show();
+            getBooks(searchTerm);
+
+        }
+
         // Enable Send button when there's text to send
-        mSearchEditTextView.addTextChangedListener(new TextWatcher() {
+    /*    mSearchEditTextView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
@@ -128,6 +151,21 @@ public class BookListingActivity extends AppCompatActivity implements BookListin
                 }
             }
         });
+
+*/
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        setIntent(intent);
+        handleIntent(intent);
+    }
+
+    private void handleIntent(Intent intent) {
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            getBooks(query);
+        }
     }
 
     private void getBooks(String searchTerm) {
@@ -157,6 +195,11 @@ public class BookListingActivity extends AppCompatActivity implements BookListin
                     // so the list can be populated in the user interface
                     mRecyclerView.setAdapter(mAdapter);
                     //   mSearchEditTextView.setText("");
+
+                    //Load an app
+                    mAdView = findViewById(R.id.adView);
+                    AdRequest adRequest = new AdRequest.Builder().build();
+                    mAdView.loadAd(adRequest);
                 }
             }
 
@@ -184,6 +227,24 @@ public class BookListingActivity extends AppCompatActivity implements BookListin
         // Send the intent to launch a new activity
         startActivity(websiteIntent);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the options menu from XML
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.options_menu, menu);
+
+        // Get the SearchView and set the searchable configuration
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+        // Assumes current activity is the searchable activity
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
+
+        return true;
+    }
+
+
 }
 
 
