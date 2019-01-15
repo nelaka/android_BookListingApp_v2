@@ -29,12 +29,13 @@
             android:scrollbars="vertical"/>
 
         <!-- Empty view for the list -->
+        <!-- Empty view for the list -->
         <LinearLayout
             android:id="@+id/empty_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginStart="@dimen/default_padding_small"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:orientation="vertical"
             android:padding="@dimen/padding">
 
@@ -43,20 +44,35 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginStart="@dimen/default_padding_small"
+                android:layout_marginEnd="@dimen/default_padding_small"
                 android:fontFamily="sans-serif-medium"
                 android:paddingTop="@dimen/padding"
                 android:text="@string/empty_view_title_text"
                 android:textAppearance="?android:textAppearanceMedium" />
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:contentDescription="@string/desc_img_no_result"
+                android:padding="@dimen/padding"
+                android:scaleType="fitXY"
+                android:src="@drawable/bookself" />
+
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginStart="@dimen/default_padding_small"
+                android:layout_marginEnd="@dimen/default_padding_small"
+                android:layout_marginBottom="@dimen/default_padding_small"
                 android:fontFamily="sans-serif"
                 android:paddingTop="@dimen/default_padding_small"
                 android:text="@string/empty_view_subtitle_text"
                 android:textAppearance="?android:textAppearanceSmall"
-                android:textColor="#A2AAB0" />
+                android:textColor="@color/colorText" />
         </LinearLayout>
 
         <!-- A progress bar that will be shown to users to indicate that movies data are loading -->
