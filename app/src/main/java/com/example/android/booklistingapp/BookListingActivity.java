@@ -18,6 +18,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -49,24 +50,22 @@ import static com.example.android.booklistingapp.Config.maxResults;
 
 public class BookListingActivity extends AppCompatActivity implements BookListingAdapter.BookListingAdapterOnClickHandler {
     private static final String TAG = BookListingActivity.class.getSimpleName();
-  //  private final ArrayList<Book> mBooks = new ArrayList<>();
+
     @BindView(R.id.empty_view)
     View mEmptyView;
-  //  @BindView(R.id.search_button)
-   // ImageView mSearchButton;
-   // @BindView(R.id.search)
-   // EditText mSearchEditTextView;
-    @BindView(R.id.books_rv)
+     @BindView(R.id.books_rv)
     RecyclerView mRecyclerView;
     @BindView(R.id.pb_loading_indicator)
     ProgressBar mLoadingIndicator;
+    @BindView((R.id.adView))
+    AdView mAdView;
     private ArrayList<Item> mItems = new ArrayList<>();
+
     /**
      * Adapter for the list of books
      */
     private BookListingAdapter mAdapter;
 
-    private AdView mAdView;
     /**
      * Returns true if network is available or about to become available
      */
@@ -101,58 +100,18 @@ public class BookListingActivity extends AppCompatActivity implements BookListin
         // Get the intent, verify the action and get the query
         Intent intent = getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String searchTerm = intent.getStringExtra(SearchManager.QUERY);
-            Toast.makeText(getApplicationContext(), "Searching for: " + searchTerm, Toast.LENGTH_SHORT).show();
-            getBooks(searchTerm);
+            Context context = getApplicationContext();
 
+            //Check for internet connection
+            if (isNetworkAvailable(context)) {
+                String searchTerm = intent.getStringExtra(SearchManager.QUERY);
+                Toast.makeText(getApplicationContext(), "Searching for: " + searchTerm, Toast.LENGTH_SHORT).show();
+                getBooks(searchTerm);
+            } else {
+                //Provide feedback about no internet connection
+                Toast.makeText(BookListingActivity.this, "No internet connection available. Please check your internet connection!", Toast.LENGTH_LONG).show();
+            }
         }
-
-        // Enable Send button when there's text to send
-    /*    mSearchEditTextView.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (charSequence.toString().trim().length() > 0) {
-                    mSearchButton.setEnabled(true);
-
-                } else {
-                    mSearchButton.setEnabled(false);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        mSearchEditTextView.setFilters(new InputFilter[]{new InputFilter.LengthFilter(Config.DEFAULT_MSG_LENGTH_LIMIT)});
-
-
-        // Set a click listener on the search Button, to implement the search
-        mSearchButton.setOnClickListener(new View.OnClickListener() {
-            // The code in this method will be executed when the button is clicked on.
-            @Override
-            public void onClick(View view) {
-                Context context = getApplicationContext();
-                mItems = null;
-                //       mBooks = null;
-                //Check for internet connection
-                if (isNetworkAvailable(context)) {
-                    String searchTerm = mSearchEditTextView.getText().toString();
-
-                    Toast.makeText(getApplicationContext(), "Searching for: " + searchTerm, Toast.LENGTH_SHORT).show();
-                    getBooks(searchTerm);
-                } else {
-                    //Provide feedback about no internet connection
-                    Toast.makeText(BookListingActivity.this, "Please check your internet connection - No internet!", Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-
-*/
     }
 
     @Override
@@ -169,8 +128,7 @@ public class BookListingActivity extends AppCompatActivity implements BookListin
     }
 
     private void getBooks(String searchTerm) {
-        // if (mItems.size() < 1 || mItems.get(0) == null) {
-//if (searchTerm != null){
+
         final ArrayList<Book> mBooks = new ArrayList<>();
         ApiInterface apiService = ApiClient.getClient().create(ApiInterface.class);
         Call<ItemResponse> call;
@@ -194,10 +152,8 @@ public class BookListingActivity extends AppCompatActivity implements BookListin
                     // Set the adapter on the {@link ListView}
                     // so the list can be populated in the user interface
                     mRecyclerView.setAdapter(mAdapter);
-                    //   mSearchEditTextView.setText("");
 
                     //Load an app
-                    mAdView = findViewById(R.id.adView);
                     AdRequest adRequest = new AdRequest.Builder().build();
                     mAdView.loadAd(adRequest);
                 }
@@ -205,8 +161,9 @@ public class BookListingActivity extends AppCompatActivity implements BookListin
 
             @Override
             public void onFailure(@NonNull Call<ItemResponse> call, @NonNull Throwable t) {
-                 mLoadingIndicator.setVisibility(View.INVISIBLE);
+                mLoadingIndicator.setVisibility(View.INVISIBLE);
                 mEmptyView.setVisibility(View.VISIBLE);
+                Toast.makeText(getApplicationContext(), "Unfortunately, no results. Try with another term...", Toast.LENGTH_SHORT).show();
                 //   mErrorMsg = getString(R.string.msg_error);
                 // showErrorMessage(mErrorMsg);
                 // Log error here since request failed
@@ -214,7 +171,7 @@ public class BookListingActivity extends AppCompatActivity implements BookListin
             }
         });
     }
-//}
+
 
     @Override
     public void onClick(Book book) {
@@ -243,7 +200,6 @@ public class BookListingActivity extends AppCompatActivity implements BookListin
 
         return true;
     }
-
 
 }
 

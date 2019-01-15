@@ -1,9 +1,10 @@
 package com.example.android.booklistingapp;
 
-import java.util.List;
+import java.util.ArrayList;
+
 
 public class Utils {
-    public static String fromListToString(List<String> stringList){
+    public static String fromListToString(ArrayList<String> stringList){
         if (stringList!=null && stringList.size()>0) {
             // We need a String with all authors divided with comma
             StringBuilder bigString = new StringBuilder();

@@ -9,7 +9,8 @@ import java.util.ArrayList;
 
 public class Book implements Parcelable {
 
-        @SerializedName("title")
+
+    @SerializedName("title")
         private String title;
         @SerializedName("authors")
         private ArrayList authors = null;
@@ -17,6 +18,9 @@ public class Book implements Parcelable {
         private String infoLink;
         @SerializedName("subtitle")
         private String subtitle;
+        @SerializedName("imageLinks")
+        private ImageLinks imageLink;
+
         public final static Parcelable.Creator<Book> CREATOR = new Creator<Book>() {
 
             public Book createFromParcel(Parcel in) {
@@ -34,20 +38,24 @@ public class Book implements Parcelable {
             this.authors = in.readArrayList(String.class.getClassLoader());
             this.infoLink = in.readString();
             this.subtitle = in.readString();
+            this.imageLink = (ImageLinks) in.readValue(ImageLinks.class.getClassLoader());
+
         }
 
         /**
          *
-         * @param infoLink
-         * @param authors
-         * @param title
-         * @param subtitle
+         * @param infoLink book's link to google books page
+         * @param authors book's authors
+         * @param title book's title
+         * @param subtitle book's subtitle
+         * @param thumbnail book's small cover image
          * */
-        public Book(String title, String subtitle, ArrayList<String> authors,  String infoLink) {
+        public Book(String title, String subtitle, ArrayList<String> authors, String thumbnail, String infoLink) {
             super();
             this.title = title;
             this.authors = authors;
             this.infoLink = infoLink;
+            this.imageLink.smallThumbnail = thumbnail;
             this.subtitle = subtitle;
         }
 
@@ -86,6 +94,21 @@ public class Book implements Parcelable {
             this.infoLink = infoLink;
             return this;
         }
+
+    public String getThumbnail() {
+
+            if (imageLink != null) return imageLink.smallThumbnail;
+            else return null;
+    }
+
+    public void setThumbnail(String thumbnail) {
+        this.imageLink.smallThumbnail = thumbnail;
+    }
+
+    public Book withThumbnail(String thumbnail) {
+        this.imageLink.smallThumbnail = thumbnail;
+        return this;
+    }
 
         public String getSubtitle() {
             return subtitle;

@@ -1,21 +1,26 @@
 package com.example.android.booklistingapp.adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.android.booklistingapp.R;
 import com.example.android.booklistingapp.Utils;
 import com.example.android.booklistingapp.model.Book;
+import com.squareup.picasso.Picasso;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.BindViews;
 import butterknife.ButterKnife;
 
 
@@ -74,6 +79,9 @@ public class BookListingAdapter extends RecyclerView.Adapter<BookListingAdapter.
         TextView subtitleTextView;
         @BindView(R.id.authors)
         TextView authorsTextView;
+        @BindView(R.id.thumbnail)
+        ImageView thumbnailImageView;
+
         private final ArrayList<Book> mBooks;
         private final BookListingAdapterOnClickHandler mClickHandler;
 
@@ -106,6 +114,11 @@ public class BookListingAdapter extends RecyclerView.Adapter<BookListingAdapter.
                 authorsTextView.setText(authors);
                 authorsTextView.setVisibility(View.VISIBLE);
             }
+
+            Picasso.get().load(currentBook.getThumbnail())
+                    .placeholder(R.drawable.no_cover_thumb)
+                    .error(R.drawable.no_cover_thumb)
+                    .into(thumbnailImageView);
         }
 
         @Override
